@@ -33,8 +33,8 @@ async function main() {
     contractAddress: DELEGATE_CONTRACT_ADDRESS,
   });
 
-  // 4. Execute Contract Write
-  // We can now designate the Contract on the Account (and execute the initialize function) by sending an EIP-7702 Contract Write.
+  // // 4. Execute Contract Write
+  // // We can now designate the Contract on the Account (and execute the initialize function) by sending an EIP-7702 Contract Write.
   // const hash = await walletClient.writeContract({
   //   abi: parseAbi(["function initialize() external"]),
   //   address: eoaAccount.address,

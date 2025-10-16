@@ -1,0 +1,38 @@
+{
+  "name": "eip-7702-examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "start": "node dist/index.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint . --ext .ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cuonghx-dev/eip-7702-examples.git"
+  },
+  "keywords": [],
+  "author": "0xcuonghx",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cuonghx-dev/eip-7702-examples/issues"
+  },
+  "homepage": "https://github.com/cuonghx-dev/eip-7702-examples#readme",
+  "devDependencies": {
+    "@types/node": "^22.18.10",
+    "dotenv": "^17.2.3",
+    "eslint": "^9.37.0",
+    "eslint-config-prettier": "^9.1.2",
+    "eslint-plugin-import": "^2.32.0",
+    "prettier": "^3.6.2",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "viem": "^2.38.2"
+  }
+}

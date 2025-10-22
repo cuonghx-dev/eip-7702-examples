@@ -1,12 +1,12 @@
 import { createPublicClient, createWalletClient, http, parseAbi } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
-import { baseSepolia } from "viem/chains";
+import { modeTestnet } from "viem/chains";
 import dotenv from "dotenv";
 dotenv.config();
 
 async function main() {
   const DELEGATE_CONTRACT_ADDRESS =
-    "0xaAc750AC66272F50f2355A1c5efF383C16dE4fA0";
+    "0xFCD7954D6e854992c35F9eecb95C6F1b30E3f71C";
   // 2. Set up Client & Account
   //  - Next, we will need to set up a Client and a "Relay Account" that will be responsible for executing the EIP-7702 Contract Write.
 
@@ -16,7 +16,7 @@ async function main() {
 
   const walletClient = createWalletClient({
     account: relay,
-    chain: baseSepolia,
+    chain: modeTestnet,
     transport: http(),
   });
 
@@ -33,30 +33,30 @@ async function main() {
     contractAddress: DELEGATE_CONTRACT_ADDRESS,
   });
 
-  // // 4. Execute Contract Write
-  // // We can now designate the Contract on the Account (and execute the initialize function) by sending an EIP-7702 Contract Write.
-  // const hash = await walletClient.writeContract({
-  //   abi: parseAbi(["function initialize() external"]),
-  //   address: eoaAccount.address,
-  //   authorizationList: [authorization],
-  //   //                  ↑ 3. Pass the Authorization as a parameter.
-  //   functionName: "initialize",
-  // });
+  // 4. Execute Contract Write
+  // We can now designate the Contract on the Account (and execute the initialize function) by sending an EIP-7702 Contract Write.
+  const hash = await walletClient.writeContract({
+    abi: parseAbi(["function initialize() external"]),
+    address: eoaAccount.address,
+    authorizationList: [authorization],
+    //                  ↑ 3. Pass the Authorization as a parameter.
+    functionName: "initialize",
+  });
 
-  // console.log(`Transaction hash: https://sepolia.basescan.org/tx/${hash}`);
+  console.log(`Transaction hash: https://sepolia.basescan.org/tx/${hash}`);
 
   //   5. (Optional) Interact with the Delegated Account
   // Now that we have designated a Contract onto the Account, we can interact with it by invoking its functions.
 
   // Note that we no longer need to use an Authorization!
 
-  const hash = await walletClient.writeContract({
-    abi: parseAbi(["function ping() external"]),
-    address: eoaAccount.address,
-    functionName: "ping",
-  });
+  // const hash = await walletClient.writeContract({
+  //   abi: parseAbi(["function ping() external"]),
+  //   address: eoaAccount.address,
+  //   functionName: "ping",
+  // });
 
-  console.log(`Transaction hash: https://sepolia.basescan.org/tx/${hash}`);
+  console.log(`Transaction hash: https://testnet.modescan.io/tx/${hash}`);
 }
 
 main().catch((error) => {

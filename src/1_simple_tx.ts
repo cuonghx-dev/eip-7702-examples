@@ -14,7 +14,7 @@ async function main() {
     process.env.RELAY_PRIVATE_KEY as `0x${string}`
   );
 
-  const walletClient = createWalletClient({
+  const relayWalletClient = createWalletClient({
     account: relay,
     chain: modeTestnet,
     transport: http(),
@@ -28,14 +28,20 @@ async function main() {
     process.env.EOA_PRIVATE_KEY as `0x${string}`
   );
 
-  const authorization = await walletClient.signAuthorization({
+  const eoaWalletClient = createWalletClient({
     account: eoaAccount,
+    chain: modeTestnet,
+    transport: http(),
+  });
+
+  const authorization = await eoaWalletClient.signAuthorization({
+    executor: "self",
     contractAddress: DELEGATE_CONTRACT_ADDRESS,
   });
 
   // 4. Execute Contract Write
   // We can now designate the Contract on the Account (and execute the initialize function) by sending an EIP-7702 Contract Write.
-  const hash = await walletClient.writeContract({
+  const hash = await relayWalletClient.writeContract({
     abi: parseAbi(["function initialize() external"]),
     address: eoaAccount.address,
     authorizationList: [authorization],
@@ -43,7 +49,7 @@ async function main() {
     functionName: "initialize",
   });
 
-  console.log(`Transaction hash: https://sepolia.basescan.org/tx/${hash}`);
+  console.log(`Transaction hash: https://testnet.modescan.io/tx/${hash}`);
 
   //   5. (Optional) Interact with the Delegated Account
   // Now that we have designated a Contract onto the Account, we can interact with it by invoking its functions.
@@ -56,7 +62,7 @@ async function main() {
   //   functionName: "ping",
   // });
 
-  console.log(`Transaction hash: https://testnet.modescan.io/tx/${hash}`);
+  // console.log(`Transaction hash: https://testnet.modescan.io/tx/${hash}`);
 }
 
 main().catch((error) => {
